@@ -1,20 +1,37 @@
-# Pipeline 2: executar às 23 horas o script para backup,
-# depois adicionar, commitar e push com o git
+# TODO: Pipeline 2: executar as 23 horas o 
+#       script para backup, depois adicionar,
+#       commitar e push com o git
 
 # ===================================================
 # Nome da pipeline
 # ===================================================
-name: pipe-backup
+name: Backup
 
+# ===================================================
+# O bloco "on" define os gatilhos da pipeline.
+#
+# ===================================================
 on:
-    schedule:
-        - cron: '0 23 * * *' 
-        # Executar às 23 horas todos os dias
-jobs:
-    backup:
-        runs-on: ubuntu-latest
+  # -------------------------------------------------
+  # Executa automaticamente em horários programados.
+  schedule:
+    # Todos os dias às 23:00 UTC.
+    - cron: "0 23 * * *"
 
-        steps: 
-            - name: Efetuar backup.py
-            uses: actions/checkout@v4
-            run: python3 backup.py
+jobs:
+
+  checkout:
+    runs-on: ubuntu-latest
+
+    steps:
+      # -------------------------------------------------
+      # Faz o checkout do repositório.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Exec. Backup
+        run: |
+          # Executa o script de backup
+          python ./scripts/backup.py
+
+          
