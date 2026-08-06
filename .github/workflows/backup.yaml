@@ -5,7 +5,7 @@
 # ===================================================
 # Nome da pipeline
 # ===================================================
-name: Backup
+name: Pipeline 2 - Backup
 
 permissions:
   contents: write
