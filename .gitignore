@@ -6,5 +6,7 @@ __pycache__/
 venv/
 .env
 
-backups/*.json
-docs/*.html
+# backups/*.json
+# docs/*.html
+# deixando comentado para a execução do workflow de backup e docs funcionar corretamente
+# pois ele precisa criar os arquivos de backup e docs para depois fazer o upload como artifact.
