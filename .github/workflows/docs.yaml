@@ -26,6 +26,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Criar pasta docs
+        run: mkdir -p docs
+
       - name: Executar script gerar_docs.py
         run: python ./scripts/gerar_docs.py
 
