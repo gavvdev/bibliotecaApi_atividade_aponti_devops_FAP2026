@@ -1,0 +1,51 @@
+name: Pipeline 3 - Issue
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  triagem:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Adicionar label
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              await github.rest.issues.getLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: "triagem"
+              });
+            } catch (error) {
+              await github.rest.issues.createLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: "triagem",
+                color: "fbca04",
+                description: "Issue aberta aguardando análise"
+              });
+            }
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ["triagem"]
+            });
+
+      - name: Responder automaticamente
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: "Obrigado por abrir esta issue na Biblioteca. Ela já foi etiquetada como `triagem` e em breve será analisada pelo time."
+            });
+
+
